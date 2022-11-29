@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{8C901F33-A18A-4C02-8756-9B26A91470BA}" SchemaVersion="97">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{8C901F33-A18A-4C02-8756-9B26A91470BA}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Play_MoffeinBlighted_Spawn" ID="{07598945-3CCD-408E-8AD0-19AAE3CE577A}">
+					<ChildrenList>
+						<Action Name="" ID="{524EC467-3C98-408E-8933-FAAD30113736}" ShortID="780031381">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BlightedSpawn" ID="{0B4EA24A-8594-45A0-B6EA-076EEEBA3876}" WorkUnitID="{252C74D3-BD62-4800-92B7-FEDBF5F61733}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

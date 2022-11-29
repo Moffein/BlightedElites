@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{79E7BD0F-BE0A-4627-9108-A581F7554C51}" SchemaVersion="97">
+	<SoundBanks>
+		<WorkUnit Name="Default Work Unit" ID="{79E7BD0F-BE0A-4627-9108-A581F7554C51}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="BlightedElitesSoundbank" ID="{F16C003C-8420-4F2F-8F83-4DB026E00F40}">
+					<ObjectInclusionList>
+						<ObjectRef Name="Play_MoffeinBlighted_Spawn" ID="{07598945-3CCD-408E-8AD0-19AAE3CE577A}" WorkUnitID="{8C901F33-A18A-4C02-8756-9B26A91470BA}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundBanks>
+</WwiseDocument>
