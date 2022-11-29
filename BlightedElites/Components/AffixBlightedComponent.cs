@@ -53,6 +53,7 @@ namespace BlightedElites.Components
                         {
                             List<EliteDef> remainingElites = new List<EliteDef>(etd.availableDefs);
                             remainingElites.Remove(elite1);
+
                             int index = rng.RangeInt(0, remainingElites.Count);
                             EliteDef elite2 = remainingElites[index];
                             if (elite2 && elite2.eliteEquipmentDef && elite2.eliteEquipmentDef.passiveBuffDef)
@@ -67,9 +68,8 @@ namespace BlightedElites.Components
                     CombatDirector.EliteTierDef t1Elites = EliteAPI.VanillaFirstTierDef;
                     CombatDirector.EliteTierDef t2Elites = EliteAPI.VanillaEliteTiers[3];
 
-                    List<EliteDef> combinedElitePool = new List<EliteDef>(t1Elites.eliteTypes);
-                    List<EliteDef> elitePoolT2 = new List<EliteDef>(t2Elites.eliteTypes);
-                    combinedElitePool.AddRange(elitePoolT2);
+                    List<EliteDef> combinedElitePool = new List<EliteDef>(t1Elites.availableDefs);
+                    combinedElitePool.AddRange(new List<EliteDef>(t2Elites.availableDefs));
                     combinedElitePool.Remove(BlightedElitesPlugin.AffixBlightedElite);
 
                     EliteDef elite1 = null;
