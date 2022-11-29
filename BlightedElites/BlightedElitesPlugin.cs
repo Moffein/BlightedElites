@@ -258,20 +258,6 @@ namespace BlightedElites
                     return shieldAmount;
                 });
             };
-
-            IL.RoR2.CharacterBody.UpdateAllTemporaryVisualEffects += (il) =>
-            {
-                ILCursor c = new ILCursor(il);
-                c.GotoNext(MoveType.After,
-                     x => x.MatchLdsfld(typeof(RoR2Content.Buffs), "VoidFogMild"),
-                     x => x.MatchCall<CharacterBody>("HasBuff")
-                    );
-                c.Emit(OpCodes.Ldarg_0);//cb
-                c.EmitDelegate<Func<bool, CharacterBody, bool>>((hasBuff, body) =>
-                {
-                    return hasBuff || (body.equipmentSlot && body.equipmentSlot.equipmentIndex == AffixBlightedEquipment.equipmentIndex);
-                });
-            };
         }
 
         private static void UpdateBlightedBuff(On.RoR2.CharacterBody.orig_OnClientBuffsChanged orig, CharacterBody self)
