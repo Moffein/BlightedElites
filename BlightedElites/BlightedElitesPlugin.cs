@@ -18,7 +18,7 @@ namespace BlightedElites
 {
     [BepInDependency("com.Moffein.EliteReworks", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.Moffein.BlightedElites", "Blighted Elites", "1.0.0")]
+    [BepInPlugin("com.Moffein.BlightedElites", "Blighted Elites", "1.1.0")]
     [R2API.Utils.R2APISubmoduleDependency(nameof(EliteAPI), nameof(SoundAPI))]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     public class BlightedElitesPlugin : BaseUnityPlugin
@@ -33,17 +33,17 @@ namespace BlightedElites
         public static float healthMult = 12f;
         public static float damageMult = 3.5f;
         public static float affixDropChance = 0.00025f;
+        public static bool allowT2Affixes = false;
 
         public static AssetBundle assetBundle;
         public static PluginInfo pluginInfo;
-
-        public static bool matchT2Stats = false;
 
         private void ReadConfig()
         {
             healthMult = Config.Bind<float>("Stats", "Health Multiplier", 12f, "Elite HP Multiplier. Malachite is 18.").Value;
             damageMult = Config.Bind<float>("Stats", "Damage Multiplier", 3.5f, "Elite damage Multiplier. Malachite is 6.").Value;
-            damageMult = Config.Bind<float>("Stats", "Affix Drop Chance", 0.025f, "Chance to drop affix on death. Max is 100 (guaranteed drop).").Value;
+            affixDropChance = Config.Bind<float>("Stats", "Affix Drop Chance", 0.025f, "Chance to drop affix on death. Max is 100 (guaranteed drop).").Value;
+            allowT2Affixes = Config.Bind<bool>("Stats", "Allow T2 Affixes", false, "Blighted Elites can use T2 affixes like Celestine and Malachite.").Value;
         }
 
 

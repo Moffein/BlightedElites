@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using R2API;
 using UnityEngine.Networking;
+using System.Linq;
 
 namespace BlightedElites.Components
 {
@@ -36,25 +37,61 @@ namespace BlightedElites.Components
                 buff1 = null;
                 buff2 = null;
 
-                CombatDirector.EliteTierDef etd = EliteAPI.VanillaFirstTierDef;
-                if (etd != null && etd.HasAnyAvailableEliteDefs())
+                if (!BlightedElitesPlugin.allowT2Affixes || EliteAPI.VanillaEliteTiers.Length <= 3) //t2 elites are at index 3. If that's missing for some reason, dont try to spawn them.
                 {
-                    EliteDef elite1 = etd.GetRandomAvailableEliteDef(rng);
-                    if (elite1 && elite1.eliteEquipmentDef && elite1.eliteEquipmentDef.passiveBuffDef)
+                    CombatDirector.EliteTierDef etd = EliteAPI.VanillaFirstTierDef;
+                    if (etd != null && etd.HasAnyAvailableEliteDefs())
                     {
-                        buff1 = elite1.eliteEquipmentDef.passiveBuffDef;
-                    }
-
-                    //Seems like cumbersome way to do this
-                    if (etd.availableDefs.Count > 1)
-                    {
-                        List<EliteDef> remainingElites = new List<EliteDef>(etd.availableDefs);
-                        remainingElites.Remove(elite1);
-                        int index = rng.RangeInt(0, remainingElites.Count);
-                        EliteDef elite2 = remainingElites[index];
-                        if (elite2 && elite2.eliteEquipmentDef && elite2.eliteEquipmentDef.passiveBuffDef)
+                        EliteDef elite1 = etd.GetRandomAvailableEliteDef(rng);
+                        if (elite1 && elite1.eliteEquipmentDef && elite1.eliteEquipmentDef.passiveBuffDef)
                         {
-                            buff2 = elite2.eliteEquipmentDef.passiveBuffDef;
+                            buff1 = elite1.eliteEquipmentDef.passiveBuffDef;
+                        }
+
+                        //Seems like cumbersome way to do this
+                        if (etd.availableDefs.Count > 1)
+                        {
+                            List<EliteDef> remainingElites = new List<EliteDef>(etd.availableDefs);
+                            remainingElites.Remove(elite1);
+                            int index = rng.RangeInt(0, remainingElites.Count);
+                            EliteDef elite2 = remainingElites[index];
+                            if (elite2 && elite2.eliteEquipmentDef && elite2.eliteEquipmentDef.passiveBuffDef)
+                            {
+                                buff2 = elite2.eliteEquipmentDef.passiveBuffDef;
+                            }
+                        }
+                    }
+                }
+                else //Jank code incoming
+                {
+                    CombatDirector.EliteTierDef t1Elites = EliteAPI.VanillaFirstTierDef;
+                    CombatDirector.EliteTierDef t2Elites = EliteAPI.VanillaEliteTiers[3];
+
+                    List<EliteDef> combinedElitePool = new List<EliteDef>(t1Elites.eliteTypes);
+                    List<EliteDef> elitePoolT2 = new List<EliteDef>(t2Elites.eliteTypes);
+                    combinedElitePool.AddRange(elitePoolT2);
+
+                    EliteDef elite1 = null;
+                    EliteDef elite2 = null;
+
+                    if (combinedElitePool.Count > 0)
+                    {
+                        int index = rng.RangeInt(0, combinedElitePool.Count);
+                        elite1 = combinedElitePool[index];
+                        if (elite1 && elite1.eliteEquipmentDef && elite1.eliteEquipmentDef.passiveBuffDef)
+                        {
+                            buff1 = elite1.eliteEquipmentDef.passiveBuffDef;
+                        }
+                        combinedElitePool.Remove(elite1);
+
+                        if (combinedElitePool.Count > 0)
+                        {
+                            index = rng.RangeInt(0, combinedElitePool.Count);
+                            elite2 = combinedElitePool[index];
+                            if (elite2 && elite2.eliteEquipmentDef && elite2.eliteEquipmentDef.passiveBuffDef)
+                            {
+                                buff2 = elite2.eliteEquipmentDef.passiveBuffDef;
+                            }
                         }
                     }
                 }
