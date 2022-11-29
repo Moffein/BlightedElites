@@ -70,6 +70,7 @@ namespace BlightedElites.Components
                     List<EliteDef> combinedElitePool = new List<EliteDef>(t1Elites.eliteTypes);
                     List<EliteDef> elitePoolT2 = new List<EliteDef>(t2Elites.eliteTypes);
                     combinedElitePool.AddRange(elitePoolT2);
+                    combinedElitePool.Remove(BlightedElitesPlugin.AffixBlightedElite);
 
                     EliteDef elite1 = null;
                     EliteDef elite2 = null;
