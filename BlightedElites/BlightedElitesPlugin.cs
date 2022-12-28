@@ -18,7 +18,7 @@ namespace BlightedElites
 {
     [BepInDependency("com.Moffein.EliteReworks", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.Moffein.BlightedElites", "Blighted Elites", "1.1.3")]
+    [BepInPlugin("com.Moffein.BlightedElites", "Blighted Elites", "1.1.4")]
     [R2API.Utils.R2APISubmoduleDependency(nameof(PrefabAPI), nameof(EliteAPI), nameof(SoundAPI))]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     public class BlightedElitesPlugin : BaseUnityPlugin
@@ -139,8 +139,10 @@ namespace BlightedElites
             AffixBlightedEquipment.isBoss = false;
             AffixBlightedEquipment.passiveBuffDef = AffixBlightedBuff;
             AffixBlightedEquipment.pickupIconSprite = assetBundle.LoadAsset<Sprite>("texIconPickupAffixBlight.png"); //from LiT
-            AffixBlightedEquipment.dropOnDeathChance = BlightedElitesPlugin.affixDropChance/100f;
+            AffixBlightedEquipment.dropOnDeathChance = BlightedElitesPlugin.affixDropChance * 0.01f;
             AffixBlightedEquipment.enigmaCompatible = false;
+
+            Debug.Log("Drop Chance: " + Addressables.LoadAssetAsync<EquipmentDef>("RoR2/Base/EliteFire/EliteFireEquipment.asset").WaitForCompletion().dropOnDeathChance);
 
             //Based off of Spikestrip code.
             AffixBlightedEquipment.pickupModelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/EliteFire/PickupEliteFire.prefab").WaitForCompletion().InstantiateClone("PickupAffixBlightedMoffein", false);
@@ -171,7 +173,7 @@ namespace BlightedElites
                 if (equipmentDef == AffixBlightedEquipment)
                 {
                     CharacterBody cb = self.characterBody;
-                    if (cb && Run.instance)
+                    if (cb && cb.isPlayerControlled && Run.instance)
                     {
                         Xoroshiro128Plus rng = Run.instance.spawnRng;
                         AffixBlightedComponent abc = cb.GetComponent<AffixBlightedComponent>();

@@ -19,6 +19,9 @@ namespace BlightedElites.Components
 
         public bool active = false;
 
+        public static float soundCooldown = 3f;
+        private float soundCooldownStopwatch = 0f;
+
         public void Reroll(Xoroshiro128Plus rng)
         {
             if (!NetworkServer.active) return;
@@ -30,6 +33,8 @@ namespace BlightedElites.Components
         {
             if (!NetworkServer.active) return;
             if (!characterBody) characterBody = base.GetComponent<CharacterBody>();
+
+            if (soundCooldownStopwatch > 0f) soundCooldownStopwatch -= Time.fixedDeltaTime;
 
             //Reroll affixes whenever Blighted is freshly activated.
             if (!active)
@@ -103,8 +108,9 @@ namespace BlightedElites.Components
                     if (buff1) characterBody.AddBuff(buff1);
                     if (buff2) characterBody.AddBuff(buff2);
 
-                    if (rerollSound)
+                    if (rerollSound && soundCooldownStopwatch <= 0f)
                     {
+                        soundCooldownStopwatch = AffixBlightedComponent.soundCooldown;
                         EffectManager.SimpleSoundEffect(rerollSound.index, base.transform.position, true);
                     }
                 }
