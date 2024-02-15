@@ -142,7 +142,7 @@ namespace BlightedElites
             AffixBlightedEquipment.dropOnDeathChance = BlightedElitesPlugin.affixDropChance * 0.01f;
             AffixBlightedEquipment.enigmaCompatible = false;
 
-            Debug.Log("Drop Chance: " + Addressables.LoadAssetAsync<EquipmentDef>("RoR2/Base/EliteFire/EliteFireEquipment.asset").WaitForCompletion().dropOnDeathChance);
+            //Debug.Log("Drop Chance: " + Addressables.LoadAssetAsync<EquipmentDef>("RoR2/Base/EliteFire/EliteFireEquipment.asset").WaitForCompletion().dropOnDeathChance);
 
             //Based off of Spikestrip code.
             AffixBlightedEquipment.pickupModelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/EliteFire/PickupEliteFire.prefab").WaitForCompletion().InstantiateClone("PickupAffixBlightedMoffein", false);
