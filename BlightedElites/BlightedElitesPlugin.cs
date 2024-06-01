@@ -18,7 +18,7 @@ namespace BlightedElites
 {
     [BepInDependency("com.Moffein.EliteReworks", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.Moffein.BlightedElites", "Blighted Elites", "1.1.4")]
+    [BepInPlugin("com.Moffein.BlightedElites", "Blighted Elites", "1.1.9")]
     [R2API.Utils.R2APISubmoduleDependency(nameof(PrefabAPI), nameof(EliteAPI), nameof(SoundAPI))]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     public class BlightedElitesPlugin : BaseUnityPlugin
