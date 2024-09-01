@@ -5,5 +5,5 @@ Game Parameter	ID	Name			Wwise Object Path	Notes
 	3673881719	Volume_SFX			\Default Work Unit\Volume_SFX	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	970195108	BlightedSpawn	C:\Users\Node\RoR2 Mods\BlightedElites\BlightedElitesWWISE\.cache\Windows\SFX\BlightedSpawn_3F75BDB9.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixer\SFX Mixer\BlightedSpawn		92901
+	970195108	BlightedSpawn	D:\Projects\RoR2 Mods\BlightedElites\BlightedElitesWWISE\.cache\Windows\SFX\BlightedSpawn_8E324C96.wem		\Actor-Mixer Hierarchy\Default Work Unit\Master Mixer\SFX Mixer\BlightedSpawn		92925
 

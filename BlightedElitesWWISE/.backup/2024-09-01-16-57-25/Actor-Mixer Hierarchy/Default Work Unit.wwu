@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{252C74D3-BD62-4800-92B7-FEDBF5F61733}" SchemaVersion="97">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{252C74D3-BD62-4800-92B7-FEDBF5F61733}" PersistMode="Standalone">
+			<ChildrenList>
+				<ActorMixer Name="Master Mixer" ID="{F7FA4368-E3E5-453B-9AA6-8E257FC7F421}" ShortID="182631225">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<RTPCList>
+								<RTPC Name="" ID="{9D633CAD-D0CB-4A15-A33F-9D25BD100FED}" ShortID="700685819">
+									<ReferenceList>
+										<Reference Name="ControlInput">
+											<ObjectRef Name="Volume_SFX" ID="{F7FA1712-AF2F-4242-B212-1A6108F50994}" WorkUnitID="{B35CFBAA-BBF0-4CC9-8F20-499DB1C6CE3A}"/>
+										</Reference>
+									</ReferenceList>
+									<Curve Name="" ID="{5900F568-5144-4C04-8B1E-2BCF02FDA6C6}">
+										<PropertyList>
+											<Property Name="Flags" Type="int32" Value="3"/>
+										</PropertyList>
+										<PointList>
+											<Point>
+												<XPos>0</XPos>
+												<YPos>-200</YPos>
+												<Flags>5</Flags>
+											</Point>
+											<Point>
+												<XPos>100</XPos>
+												<YPos>0</YPos>
+												<Flags>37</Flags>
+											</Point>
+										</PointList>
+									</Curve>
+								</RTPC>
+							</RTPCList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{F649A5C1-4FB2-48D3-81F7-E964D4FDB407}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2B63689C-2386-46E3-95B5-818EF953A112}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<ActorMixer Name="SFX Mixer" ID="{5AF71EC3-06DB-41B9-BD2C-C93981B6C8F6}" ShortID="429878100">
+							<PropertyList>
+								<Property Name="3DSpatialization" Type="int16" Value="2"/>
+								<Property Name="OverrideConversion" Type="bool" Value="True"/>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="Spawn Attenuation" ID="{16EE47D6-F1EE-48FD-9399-BB9ABADCAFE7}" WorkUnitID="{A543002A-074C-43CE-8E80-05CEC1FAAA4C}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{F649A5C1-4FB2-48D3-81F7-E964D4FDB407}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2B63689C-2386-46E3-95B5-818EF953A112}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="BlightedSpawn" ID="{0B4EA24A-8594-45A0-B6EA-076EEEBA3876}" ShortID="306530422">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>8</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{F649A5C1-4FB2-48D3-81F7-E964D4FDB407}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2B63689C-2386-46E3-95B5-818EF953A112}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="BlightedSpawn" ID="{B6D1EEC3-79E5-42BD-A6AC-6C6CC69FD1E2}">
+											<Language>SFX</Language>
+											<AudioFile>BlightedSpawn.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="970195108"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="BlightedSpawn" ID="{B6D1EEC3-79E5-42BD-A6AC-6C6CC69FD1E2}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</ActorMixer>
+					</ChildrenList>
+				</ActorMixer>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

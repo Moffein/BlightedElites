@@ -17,9 +17,11 @@ using RoR2.ContentManagement;
 namespace BlightedElites
 {
     [BepInDependency("com.Moffein.EliteReworks", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.Moffein.BlightedElites", "Blighted Elites", "1.1.9")]
-    [R2API.Utils.R2APISubmoduleDependency(nameof(PrefabAPI), nameof(EliteAPI), nameof(SoundAPI))]
+    [BepInDependency(R2API.R2API.PluginGUID)]
+    [BepInDependency(R2API.EliteAPI.PluginGUID)]
+    [BepInDependency(R2API.SoundAPI.PluginGUID)]
+    [BepInDependency(R2API.PrefabAPI.PluginGUID)]
+    [BepInPlugin("com.Moffein.BlightedElites", "Blighted Elites", "1.1.10")]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     public class BlightedElitesPlugin : BaseUnityPlugin
     {
