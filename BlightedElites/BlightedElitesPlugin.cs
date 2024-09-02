@@ -21,7 +21,7 @@ namespace BlightedElites
     [BepInDependency(R2API.EliteAPI.PluginGUID)]
     [BepInDependency(R2API.SoundAPI.PluginGUID)]
     [BepInDependency(R2API.PrefabAPI.PluginGUID)]
-    [BepInPlugin("com.Moffein.BlightedElites", "Blighted Elites", "1.1.10")]
+    [BepInPlugin("com.Moffein.BlightedElites", "Blighted Elites", "1.2.0")]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     public class BlightedElitesPlugin : BaseUnityPlugin
     {
@@ -40,12 +40,18 @@ namespace BlightedElites
         public static AssetBundle assetBundle;
         public static PluginInfo pluginInfo;
 
+        private bool allowTwisted;
+        private bool allowGold;
+
         private void ReadConfig()
         {
             healthMult = Config.Bind<float>("Stats", "Health Multiplier", 12f, "Elite HP Multiplier. Malachite is 18.").Value;
             damageMult = Config.Bind<float>("Stats", "Damage Multiplier", 3.5f, "Elite damage Multiplier. Malachite is 6.").Value;
             affixDropChance = Config.Bind<float>("Stats", "Affix Drop Chance", 0.025f, "Chance to drop affix on death. Max is 100 (guaranteed drop).").Value;
             allowT2Affixes = Config.Bind<bool>("Stats", "Allow T2 Affixes", false, "Blighted Elites can use T2 affixes like Celestine and Malachite.").Value;
+
+            allowGold = Config.Bind<bool>("Elites", "Allow Gilded", false, "Add Gilded elites to the T1 affix list.").Value;
+            allowTwisted = Config.Bind<bool>("Elites", "Allow Twisted", false, "Add Twisted elites to the T2 affix list.").Value;
         }
 
 
@@ -58,6 +64,8 @@ namespace BlightedElites
 
             ReadConfig();
 
+            if (allowTwisted) AffixBlightedComponent.tier2Affixes.Add(Addressables.LoadAssetAsync<EliteDef>("RoR2/DLC2/Elites/EliteBead/edBead.asset").WaitForCompletion());
+            if (allowGold) AffixBlightedComponent.tier1Affixes.Add(Addressables.LoadAssetAsync<EliteDef>("RoR2/DLC2/Elites/EliteAurelionite/edAurelionite.asset").WaitForCompletion());
 
             SetupBuff();
             SetupEquipment();

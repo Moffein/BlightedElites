@@ -5,12 +5,26 @@ using System.Collections.Generic;
 using R2API;
 using UnityEngine.Networking;
 using System.Linq;
+using UnityEngine.AddressableAssets;
 
 namespace BlightedElites.Components
 {
     public class AffixBlightedComponent : MonoBehaviour
     {
         public static NetworkSoundEventDef rerollSound;
+
+        public static List<EliteDef> tier1Affixes = new List<EliteDef>()
+        {
+            Addressables.LoadAssetAsync<EliteDef>("RoR2/Base/EliteFire/edFire.asset").WaitForCompletion(),
+            Addressables.LoadAssetAsync<EliteDef>("RoR2/Base/EliteIce/edIce.asset").WaitForCompletion(),
+            Addressables.LoadAssetAsync<EliteDef>("RoR2/Base/EliteLightning/edLightning.asset").WaitForCompletion(),
+            Addressables.LoadAssetAsync<EliteDef>("RoR2/DLC1/EliteEarth/edEarth.asset").WaitForCompletion(),
+        };
+        public static List<EliteDef> tier2Affixes = new List<EliteDef>()
+        {
+            Addressables.LoadAssetAsync<EliteDef>("RoR2/Base/EliteHaunted/edHaunted.asset").WaitForCompletion(),
+            Addressables.LoadAssetAsync<EliteDef>("RoR2/Base/ElitePoison/edPoison.asset").WaitForCompletion(),
+        };
 
         public BuffDef buff1;
         public BuffDef buff2;
@@ -42,65 +56,17 @@ namespace BlightedElites.Components
                 buff1 = null;
                 buff2 = null;
 
-                if (!BlightedElitesPlugin.allowT2Affixes || EliteAPI.VanillaEliteTiers.Length <= 3) //t2 elites are at index 3. If that's missing for some reason, dont try to spawn them.
+                //Only roll 1 t2 elite affix
+                EliteDef elite1 = GetRandomElite(tier1Affixes);
+                if (BlightedElitesPlugin.allowT2Affixes && UnityEngine.Random.Range(0,6) == 0)
                 {
-                    CombatDirector.EliteTierDef etd = EliteAPI.VanillaFirstTierDef;
-                    if (etd != null && etd.HasAnyAvailableEliteDefs())
-                    {
-                        EliteDef elite1 = etd.GetRandomAvailableEliteDef(rng);
-                        if (elite1 && elite1.eliteEquipmentDef && elite1.eliteEquipmentDef.passiveBuffDef)
-                        {
-                            buff1 = elite1.eliteEquipmentDef.passiveBuffDef;
-                        }
-
-                        //Seems like cumbersome way to do this
-                        if (etd.availableDefs.Count > 1)
-                        {
-                            List<EliteDef> remainingElites = new List<EliteDef>(etd.availableDefs);
-                            remainingElites.Remove(elite1);
-
-                            int index = rng.RangeInt(0, remainingElites.Count);
-                            EliteDef elite2 = remainingElites[index];
-                            if (elite2 && elite2.eliteEquipmentDef && elite2.eliteEquipmentDef.passiveBuffDef)
-                            {
-                                buff2 = elite2.eliteEquipmentDef.passiveBuffDef;
-                            }
-                        }
-                    }
+                    EliteDef overrideElite = GetRandomElite(tier2Affixes);
+                    if (overrideElite != null) elite1 = overrideElite;
                 }
-                else //Jank code incoming
-                {
-                    CombatDirector.EliteTierDef t1Elites = EliteAPI.VanillaFirstTierDef;
-                    CombatDirector.EliteTierDef t2Elites = EliteAPI.VanillaEliteTiers[3];
+                if (elite1) buff1 = GetEliteBuff(elite1);
 
-                    List<EliteDef> combinedElitePool = new List<EliteDef>(t1Elites.availableDefs);
-                    combinedElitePool.AddRange(new List<EliteDef>(t2Elites.availableDefs));
-                    combinedElitePool.Remove(BlightedElitesPlugin.AffixBlightedElite);
-
-                    EliteDef elite1 = null;
-                    EliteDef elite2 = null;
-
-                    if (combinedElitePool.Count > 0)
-                    {
-                        int index = rng.RangeInt(0, combinedElitePool.Count);
-                        elite1 = combinedElitePool[index];
-                        if (elite1 && elite1.eliteEquipmentDef && elite1.eliteEquipmentDef.passiveBuffDef)
-                        {
-                            buff1 = elite1.eliteEquipmentDef.passiveBuffDef;
-                        }
-                        combinedElitePool.Remove(elite1);
-
-                        if (combinedElitePool.Count > 0)
-                        {
-                            index = rng.RangeInt(0, combinedElitePool.Count);
-                            elite2 = combinedElitePool[index];
-                            if (elite2 && elite2.eliteEquipmentDef && elite2.eliteEquipmentDef.passiveBuffDef)
-                            {
-                                buff2 = elite2.eliteEquipmentDef.passiveBuffDef;
-                            }
-                        }
-                    }
-                }
+                EliteDef elite2 = GetRandomElite(tier1Affixes.Where(ed => ed != elite1).ToList());
+                if (elite2) buff2 = GetEliteBuff(elite2);
 
                 if (buff1 || buff2)
                 {
@@ -148,6 +114,24 @@ namespace BlightedElites.Components
                     if (characterBody.HasBuff(BlightedElitesPlugin.AffixBlightedBuff) && Run.instance) Activate(Run.instance.spawnRng);
                 }
             }
+        }
+
+        public static BuffDef GetEliteBuff(EliteDef eliteDef)
+        {
+            if (eliteDef.eliteEquipmentDef && eliteDef.eliteEquipmentDef.passiveBuffDef) return eliteDef.eliteEquipmentDef.passiveBuffDef;
+            return null;
+        }
+
+        public static EliteDef GetRandomElite(List<EliteDef> eliteDefs)
+        {
+            List<EliteDef> trimmed = eliteDefs.Where(ed => ed.IsAvailable()).ToList();
+            if (trimmed.Count <= 0)
+            {
+                Debug.LogError("BlightedElites: GetRandomElite returned null.");
+                return null;
+            }
+
+            return trimmed[UnityEngine.Random.Range(0, trimmed.Count)];
         }
     }
 }
