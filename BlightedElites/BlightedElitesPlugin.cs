@@ -196,6 +196,8 @@ namespace BlightedElites
             return result;
         }
 
+        private static EliteDef malachiteDef = Addressables.LoadAssetAsync<EliteDef>("RoR2/Base/ElitePoison/edPoison.asset").WaitForCompletion();
+        private static EliteDef celestineDef = Addressables.LoadAssetAsync<EliteDef>("RoR2/Base/EliteHaunted/edHaunted.asset").WaitForCompletion();
         private void SetupElite()
         {
             //EliteDef malachiteDef = Addressables.LoadAssetAsync<EliteDef>("RoR2/Base/ElitePoison/edPoison.asset").WaitForCompletion();
@@ -218,12 +220,18 @@ namespace BlightedElites
             {
                 orig();
 
-                if (EliteAPI.VanillaEliteTiers.Length > 3)
+                //Add to T2 tiers.
+                foreach (CombatDirector.EliteTierDef etd in EliteAPI.GetCombatDirectorEliteTiers())
                 {
-                    CombatDirector.EliteTierDef targetTier = EliteAPI.VanillaEliteTiers[3];
-                    List<EliteDef> elites = targetTier.eliteTypes.ToList();
-                    elites.Add(AffixBlightedElite);
-                    targetTier.eliteTypes = elites.ToArray();
+                    if (etd.eliteTypes.Contains(malachiteDef) || etd.eliteTypes.Contains(celestineDef))
+                    {
+                        CombatDirector.EliteTierDef targetTier = etd;
+                        List<EliteDef> elites = targetTier.eliteTypes.ToList();
+                        elites.Add(AffixBlightedElite);
+                        targetTier.eliteTypes = elites.ToArray();
+
+                        Debug.Log("BlightedElites: Successfully added to tier.");
+                    }
                 }
             };
 
