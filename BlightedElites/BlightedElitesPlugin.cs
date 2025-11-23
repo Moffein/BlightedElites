@@ -21,7 +21,7 @@ namespace BlightedElites
     [BepInDependency(R2API.EliteAPI.PluginGUID)]
     [BepInDependency(R2API.SoundAPI.PluginGUID)]
     [BepInDependency(R2API.PrefabAPI.PluginGUID)]
-    [BepInPlugin("com.Moffein.BlightedElites", "Blighted Elites", "1.2.1")]
+    [BepInPlugin("com.Moffein.BlightedElites", "Blighted Elites", "1.2.2")]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     public class BlightedElitesPlugin : BaseUnityPlugin
     {
@@ -45,7 +45,7 @@ namespace BlightedElites
 
         private void ReadConfig()
         {
-            healthMult = Config.Bind<float>("Stats", "Health Multiplier", 12f, "Elite HP Multiplier. Malachite is 18.").Value;
+            healthMult = Config.Bind<float>("Stats", "Health Multiplier", 16f, "Elite HP Multiplier. Malachite is 18.").Value;
             damageMult = Config.Bind<float>("Stats", "Damage Multiplier", 4f, "Elite damage Multiplier. Malachite is 6.").Value;
             affixDropChance = Config.Bind<float>("Stats", "Affix Drop Chance", 0.025f, "Chance to drop affix on death. Max is 100 (guaranteed drop).").Value;
             allowT2Affixes = Config.Bind<bool>("Stats", "Allow T2 Affixes", false, "Blighted Elites can use T2 affixes like Celestine and Malachite.").Value;
